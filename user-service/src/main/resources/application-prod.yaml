@@ -18,7 +18,7 @@ spring:
   security:
     oauth2:
       resourceserver:
-        jwt: 
+        jwt:
           issuer-uri: https://cognito-idp.${AWS_REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}
 
 
