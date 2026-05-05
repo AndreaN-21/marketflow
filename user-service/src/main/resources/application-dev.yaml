@@ -1,0 +1,31 @@
+server:
+  port: 8081
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: ${SUPABASE_DB_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SUPABASE_DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 5
+      connection-timeout: 20000
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${JWT_SET_UTI}
+
