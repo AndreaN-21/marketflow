@@ -1,12 +1,12 @@
 package com.marketflow.userservice.controller;
 
 import com.marketflow.userservice.dto.request.RegisterRequest;
+import com.marketflow.userservice.dto.request.UpdateRequest;
 import com.marketflow.userservice.dto.response.UserResponse;
 import com.marketflow.userservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +24,9 @@ public class UserController {
   private static  final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
-  @Operation(summary = "Get user by ID")
   @GetMapping("/{id}")
   public ResponseEntity<UserResponse> getUserById (@PathVariable UUID id){
     UserResponse userResponse = userService.getUserById(id);
-
     return ResponseEntity.ok(userResponse);
   }
 
@@ -39,8 +37,15 @@ public class UserController {
 
 
   @PatchMapping("/{id}")
-  public ResponseEntity<UserResponse> editUser(@RequestBody RegisterRequest user, @PathVariable UUID id){
+  public ResponseEntity<UserResponse> editUser(@RequestBody UpdateRequest user, @PathVariable UUID id){
     return ResponseEntity.ok(userService.updateUser(user, id));
   }
+
+  @DeleteMapping("/{id}")
+  public  ResponseEntity<Void> deleteUser(@PathVariable UUID id){
+    userService.deleteUser(id);
+    return ResponseEntity.noContent().build();
+  }
+
 
 }

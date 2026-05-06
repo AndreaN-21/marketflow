@@ -1,6 +1,7 @@
 package com.marketflow.userservice.service;
 
 import com.marketflow.userservice.dto.request.RegisterRequest;
+import com.marketflow.userservice.dto.request.UpdateRequest;
 import com.marketflow.userservice.dto.response.UserResponse;
 import com.marketflow.userservice.entity.User;
 import com.marketflow.userservice.exception.ResourceNotFoundException;
@@ -41,7 +42,7 @@ public class UserService {
     return userMapper.toResponse(user);
   }
 
-  public UserResponse updateUser(RegisterRequest user, UUID id) {
+  public UserResponse updateUser(UpdateRequest user, UUID id) {
     User newUser = userRepository.getUserById(id).map(u -> {
         u.setEmail(user.getEmail());
         u.setFullName(user.getFullName());
@@ -50,5 +51,12 @@ public class UserService {
 
     return userMapper.toResponse(newUser);
 
+  }
+
+  public void deleteUser(UUID id){
+    User user = userRepository.findById(id)
+      .orElseThrow(() -> new ResourceNotFoundException(id));
+
+    userRepository.delete(user);
   }
 }
