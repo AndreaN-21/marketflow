@@ -16,5 +16,4 @@ public class RegisterRequest {
   @Email(message = "Email is invalid")
   private String email;
 
-
 }

@@ -13,7 +13,6 @@ public class UserMapper {
       .id(user.getId())
       .name(user.getFullName())
       .createdAt(user.getCreatedAt())
-      .externalId(user.getExternalId())
       .build();
 
   }

@@ -12,7 +12,6 @@ public class UserResponse {
 
   UUID id;
   String name;
-  String externalId;
   LocalDateTime createdAt;
 
 }

@@ -25,9 +25,6 @@ public class User {
     @Column(name = "full_name", nullable = false, length = 150)
     private String fullName;
 
-    @Column(name = "external_id", unique = true, nullable = false)
-    private String externalId;
-
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 

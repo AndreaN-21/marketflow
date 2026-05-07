@@ -7,9 +7,9 @@ import com.marketflow.userservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -21,8 +21,15 @@ import java.util.UUID;
 public class UserController {
 
   private final UserService userService;
-  private static  final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+  @GetMapping("/me")
+  public ResponseEntity<UserResponse> getMe(@AuthenticationPrincipal Jwt jwt){
+    UUID userId = UUID.fromString(jwt.getSubject());
+    log.debug("[getMe] - Begin for userId={}", userId);
+    UserResponse userResponse = userService.getUserById(userId);
+    log.debug("[getMe] - End for userId={}", userId);
+    return ResponseEntity.ok(userResponse);
+  }
 
   @GetMapping("/{id}")
   public ResponseEntity<UserResponse> getUserById (@PathVariable UUID id){
