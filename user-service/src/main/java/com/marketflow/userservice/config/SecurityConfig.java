@@ -26,9 +26,8 @@ public class SecurityConfig {
       .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .exceptionHandling(eh -> eh.authenticationEntryPoint(entryPoint))
       .authorizeHttpRequests(auth -> auth
-        // Health check — public
         .requestMatchers("/actuator/health").permitAll()
-        // Everything else requires a valid Supabase JWT
+        .requestMatchers("/error").permitAll()
         .anyRequest().authenticated()
       )
       .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

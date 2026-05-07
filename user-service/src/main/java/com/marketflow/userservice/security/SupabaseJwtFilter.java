@@ -31,20 +31,17 @@ public class SupabaseJwtFilter extends OncePerRequestFilter {
                                   HttpServletResponse response,
                                   FilterChain filterChain) throws ServletException, IOException {
     String header = request.getHeader("Authorization");
-
     if (header != null && header.startsWith("Bearer ")) {
       String token = header.substring(7);
       try {
         Jwt jwt = jwtDecoder.decode(token);
-        String userId = jwt.getSubject();
 
         UsernamePasswordAuthenticationToken auth =
-          new UsernamePasswordAuthenticationToken(userId, null, List.of());
+          new UsernamePasswordAuthenticationToken(jwt, null, List.of());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
       } catch (JwtException e) {
         SecurityContextHolder.clearContext();
-        log.debug("JWT validation failed: {}", e.getMessage());
       }
     }
 
